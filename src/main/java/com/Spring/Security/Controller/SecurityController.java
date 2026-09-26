@@ -21,7 +21,7 @@ public class SecurityController {
 
     }
 
-    @PostMapping("/data1")
+    @PostMapping("/create")
 
     public ResponseEntity<String> createData(@RequestBody RequestDTO request) {
         securityservice.save(request);
