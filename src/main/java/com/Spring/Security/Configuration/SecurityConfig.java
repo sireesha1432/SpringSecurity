@@ -3,11 +3,9 @@ package com.Spring.Security.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -31,7 +29,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login","/swagger-ui/**","/Generate-Token").permitAll()
+                        .requestMatchers("/login","/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(Customizer.withDefaults()
@@ -47,10 +45,16 @@ public class SecurityConfig {
         return daoAuthenticationProvider;
     }
 
+       /*@Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails userDetailsOne = User.withUsername("User1")
+                .password(passwordEncoder().encode("Pass1")).build();
+        UserDetails userDetailsTwo = User.withUsername("User2")
+                .password(passwordEncoder().encode("Pass2")).build();
+        UserDetails admin = User.withUsername("Admin")
+                .password(passwordEncoder().encode("Admin1")).build();
 
-    @Bean
-    AuthenticationManager getAuthenticationManager(AuthenticationConfiguration configuration){
-        return configuration.getAuthenticationManager();
-    }
+        return new InMemoryUserDetailsManager(userDetailsOne, userDetailsTwo, admin);
+    }*/
 
 }
